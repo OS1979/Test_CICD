@@ -21,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: chmod
+        run: chmod 400 ./.github/scripts/myscripts.sh
       - name: Run build script
-        run: sh ./.github/scripts/myscripts.sh
+        run: ./.github/scripts/myscripts.sh
         shell: bash
