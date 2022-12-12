@@ -22,5 +22,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run build script
-        run: ./.github/scripts/myscript.sh
+        run: ./.github/scripts/myscripts.sh
         shell: bash
