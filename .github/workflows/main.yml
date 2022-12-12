@@ -22,7 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: chmod
-        run: chmod 400 ./.github/scripts/myscripts.sh
+        run: chmod 700 ./.github/scripts/myscripts.sh
+      - name: ls 
+        run: ls -a ./.github/scripts/myscripts.sh
       - name: Run build script
         run: ./.github/scripts/myscripts.sh
         shell: bash
