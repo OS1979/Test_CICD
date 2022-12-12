@@ -11,3 +11,9 @@ jobs:
           node-version: '14'
       - run: npm install -g bats
       - run: bats -v
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run without -
+        run: cat /etc/*release
