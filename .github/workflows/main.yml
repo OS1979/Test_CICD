@@ -7,5 +7,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run build script
-        run: ./.github/scripts/myscripts.sh
+        run: ./rootscript.sh
         shell: bash
