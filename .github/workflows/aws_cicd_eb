@@ -1,0 +1,31 @@
+name: cicd-aws-eb
+run-name: ${{ github.actor }} is CICD pipeline from GitHub Actions AWS EB
+env:
+  EB_S3_NAME: "githubaction-to-beanstalk"
+  PACKAGE_NAME: "nodejs_app_${{ github.sha }}.zip"
+  EB_APP_NAME: "app_nodejs"
+  EB_ENV_NAME: "env-dev"
+  AWS_REGION: "eu-central-1"
+  AWS_ACCESS_KEY: "${{ secret.AWS_ACCESS_KEY}}"
+  AWS_SEC_KEY: "${{ secret.AWS_SEC_KEY}}"
+  
+on: [workflow_dispatch]
+jobs:
+  CI-step:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v3
+      
+    - name: Setup Node 
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+      - run: npm whoami
+      
+    - name: Create ZIP package
+      run : zip -r ${{ env.PACKAGE_NAME }} ./ -x *.git*
+      
+    - name: AWS Credentials
+      
+  
