@@ -1,21 +1,19 @@
-name: test
-
-on: [push]
+name: PostgreSQL Service Example
+on: push
 jobs:
-  dump_contexts_to_log:
+  postgres-job:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          # Maps TCP port 5432 in the service container to a randomly chosen available port on the host.
+          - 5432
+
     steps:
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
-      - name: Dump job context
-        run: echo '${{ toJSON(job) }}'
-      - name: Dump steps context
-        run: echo '${{ toJSON(steps) }}'
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-      - name: Dump strategy context
-        run: echo '${{ toJSON(strategy) }}'
-      - name: Dump matrix context
-        run: echo '${{ toJSON(matrix) }}'
-        
+      - uses: actions/checkout@v3
+      - run: pg_isready -h localhost -p ${{ job.services.postgres.ports[5432] }}
+      - run: ./run-tests
