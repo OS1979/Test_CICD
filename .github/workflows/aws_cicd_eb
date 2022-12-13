@@ -1,17 +1,18 @@
 name: cicd-aws-eb
 run-name: ${{ github.actor }} is CICD pipeline from GitHub Actions AWS EB
 env:
-  EB_S3_NAME: "githubaction-to-beanstalk"
-  PACKAGE_NAME: "nodejs_app_${{ github.sha }}.zip"
-  EB_APP_NAME: "app_nodejs"
-  EB_ENV_NAME: "env-dev"
-  AWS_REGION: "eu-central-1"
-  AWS_ACCESS_KEY: "${{ secret.AWS_ACCESS_KEY}}"
-  AWS_SEC_KEY: "${{ secret.AWS_SEC_KEY}}"
+  AWS_SECRET_ACCESS_KEY: "${{ secret.AWS_SEC_KEY}}"
+  AWS_ACCESS_KEY_ID    : "${{ secret.AWS_ACCESS_KEY}}"
+  PACKAGE_NAME         : "nodejs_app_${{ github.sha }}.zip"
+  EB_APP_NAME          : "app_nodejs"
+  EB_ENV_NAME          : "env-dev"
+  EB_S3_NAME           : "githubaction-to-beanstalk"
+  AWS_REGION           : "eu-central-1"
+
   
 on: [workflow_dispatch]
 jobs:
-  CI-step:
+  --== CI-step ==--:
     runs-on: ubuntu-latest
     steps:
     - name: Clone repo
@@ -26,6 +27,10 @@ jobs:
     - name: Create ZIP package
       run : zip -r ${{ env.PACKAGE_NAME }} ./ -x *.git*
       
-    - name: AWS Credentials
-      
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }} 
   
