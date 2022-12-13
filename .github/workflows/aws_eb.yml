@@ -63,7 +63,7 @@ jobs:
 
         
     - name: Deploy new version on AWS EB
-      run : aws elasticbeanstalk update-environment --environment-name  ${{ env.EB_ENV_NAME }} --version-label "Ver-${{ github.run_id }}
+      run : aws elasticbeanstalk update-environment --environment-name  ${{ env.EB_ENV_NAME }} --version-label "Ver-${{ github.run_id }}"
       
     - name: Print msg in the end CD
       run : echo "CD step is finished successfully!"
