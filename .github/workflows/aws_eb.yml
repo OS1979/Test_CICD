@@ -23,7 +23,7 @@ jobs:
       with:
         node-version: '14'
     - name: Test npm
-      run : npm whoami
+      run : echo "need run command whith npm"
       
     - name: Create ZIP package
       run : zip -r ${{ env.PACKAGE_NAME }} ./ -x *.git*
