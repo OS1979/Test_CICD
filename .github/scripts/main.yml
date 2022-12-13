@@ -1,0 +1,40 @@
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [workflow_dispatch]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
+
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run without -
+        run: cat /etc/*release
+  example-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: ls 
+        run: ls -l ./.github/scripts/myscripts.sh
+      - name: Run build script
+        run: bash ./.github/scripts/myscripts.sh
+        
+  example-job2:
+    runs-on: ubuntu-latest
+    name: Save output
+    steps:
+      - shell: bash
+        run: |
+          expr 1 + 1 > output.log
+      - name: Upload output file
+        uses: actions/upload-artifact@v3
+        with:
+          name: output-log-file
+          path: output.log
